@@ -1,10 +1,8 @@
-![banner](https://raw.github.com/PhilJay/MPChart/master/design/feature_graphic_smaller.png)
 
-[![Release](https://img.shields.io/github/release/PhilJay/MPAndroidChart.svg?style=flat)](https://jitpack.io/#Orientsec/MPAndroidChart)
-[![API](https://img.shields.io/badge/API-8%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=8)
+[![Release](https://img.shields.io/github/release/orientsec/MPAndroidChart.svg?style=flat)](https://jitpack.io/#Orientsec/MPAndroidChart)
+[![API](https://img.shields.io/badge/API-14%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=14)
 [![Android Arsenal](http://img.shields.io/badge/Android%20Arsenal-MPAndroidChart-orange.svg?style=flat)](http://android-arsenal.com/details/1/741)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Orientsec/MPAndroidChart?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge)
-[![Twitter](https://img.shields.io/badge/Twitter-@mpandroidchart-blue.svg?style=flat)](http://twitter.com/mpandroidchart)
 
 :zap: A powerful & easy to use chart library for Android :zap:
 
@@ -71,18 +69,6 @@ This repository's issue tracker is only for bugs and feature requests. The maint
 Please read the [**documentation**](https://github.com/orientsec/MPAndroidChart/wiki) first, then ask all your questions on [stackoverflow.com](https://stackoverflow.com/questions/tagged/mpandroidchart) for the fastest answer.
 
 <br/>
-
-## Donations :heart:
-
-**This project needs you!** If you would like to support this project's further development, the creator of this project or the continuous maintenance of this project, **feel free to donate**. Your donation is highly appreciated (and I love food, coffee and beer). Thank you!
-
-**My Bitcoin Wallet** (Bitcoin only)
-
-1G8G6tqQ3oh38BvDH3xq8o6gGVMvBTkcUg
-
-**My Ethereum Wallet** (Ethereum only)
-
-0x04ef098bf9f91871391363e3caf791afa3adc39b
 
 ## More Examples :+1:
 
