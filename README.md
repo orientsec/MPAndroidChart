@@ -49,7 +49,7 @@ dependencies {
 
 ## Documentation :notebook_with_decorative_cover:
 
-See the [**documentation**](https://github.com/orientsec/MPAndroidChart/wiki) for examples and general use of MPAndroidChart.
+See the [**documentation**](https://github.com/PhilJay/MPAndroidChart/wiki) for examples and general use of MPAndroidChart.
 
 See the [**javadocs**](https://jitpack.io/com/github/orientsec/MPAndroidChart/v4.0.0-alpha/javadoc/) for more advanced documentation.
 
