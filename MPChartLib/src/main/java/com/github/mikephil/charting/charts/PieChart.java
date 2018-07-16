@@ -8,7 +8,6 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
-import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.highlight.PieHighlighter;
@@ -290,17 +289,6 @@ public class PieChart extends PieRadarChartBase<PieData> {
      */
     private float calcAngle(float value, float yValueSum) {
         return value / yValueSum * mMaxAngle;
-    }
-
-    /**
-     * This will throw an exception, PieChart has no XAxis object.
-     *
-     * @return
-     */
-    @Deprecated
-    @Override
-    public XAxis getXAxis() {
-        throw new RuntimeException("PieChart has no XAxis");
     }
 
     @Override
@@ -592,17 +580,6 @@ public class PieChart extends PieRadarChartBase<PieData> {
      */
     public void setTransparentCircleAlpha(int alpha) {
         ((PieChartRenderer) mRenderer).getPaintTransparentCircle().setAlpha(alpha);
-    }
-
-    /**
-     * Set this to true to draw the entry labels into the pie slices (Provided by the getLabel() method of the PieEntry class).
-     * Deprecated -> use setDrawEntryLabels(...) instead.
-     *
-     * @param enabled
-     */
-    @Deprecated
-    public void setDrawSliceText(boolean enabled) {
-        mDrawEntryLabels = enabled;
     }
 
     /**

@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.Legend.LegendPosition;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -125,12 +124,15 @@ public class HalfPieChartActivity extends DemoBase {
     private void moveOffScreen() {
 
         Display display = getWindowManager().getDefaultDisplay();
-        int height = display.getHeight();  // deprecated
+        Point point = new Point();
+        display.getSize(point);
+        int height = point.y;
+//        int height = display.getHeight();  //
 
-        int offset = (int)(height * 0.65); /* percent to move */
+        int offset = (int) (height * 0.65); /* percent to move */
 
         RelativeLayout.LayoutParams rlParams =
-                (RelativeLayout.LayoutParams)mChart.getLayoutParams();
+                (RelativeLayout.LayoutParams) mChart.getLayoutParams();
         rlParams.setMargins(0, 0, 0, -offset);
         mChart.setLayoutParams(rlParams);
     }

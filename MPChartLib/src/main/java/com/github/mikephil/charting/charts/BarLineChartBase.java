@@ -566,10 +566,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
             return false;
 
         // check if touch gestures are enabled
-        if (!mTouchEnabled)
-            return false;
-        else
-            return mChartTouchListener.onTouch(this, event);
+        return mTouchEnabled && mChartTouchListener.onTouch(this, event);
     }
 
     @Override
