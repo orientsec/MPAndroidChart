@@ -11,8 +11,8 @@ android {
         //noinspection MinSdkTooLow
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 3
-        versionName '3.0.3'
+        versionCode 1
+        versionName '1.0.0'
     }
     buildTypes {
         release {
