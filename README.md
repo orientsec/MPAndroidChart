@@ -66,7 +66,7 @@ Download the [MPAndroidChart Example App](https://play.google.com/store/apps/det
 
 This repository's issue tracker is only for bugs and feature requests. The maintainers ask that you refrain from asking questions about how to use MPAndroidChart through the issue tracker.
 
-Please read the [**documentation**](https://github.com/orientsec/MPAndroidChart/wiki) first, then ask all your questions on [stackoverflow.com](https://stackoverflow.com/questions/tagged/mpandroidchart) for the fastest answer.
+Please read the [**documentation**](https://github.com/PhilJay/MPAndroidChart/wiki) first, then ask all your questions on [stackoverflow.com](https://stackoverflow.com/questions/tagged/mpandroidchart) for the fastest answer.
 
 <br/>
 
