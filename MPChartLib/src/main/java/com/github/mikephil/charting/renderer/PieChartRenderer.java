@@ -963,7 +963,7 @@ public class PieChartRenderer extends DataRenderer {
      */
     protected void drawRoundedSlices(Canvas c) {
 
-        if (!mChart.isDrawRoundedSlicesEnabled())
+        if (!mChart.isDrawEntryLabelsEnabled())
             return;
 
         IPieDataSet dataSet = mChart.getData().getDataSet();

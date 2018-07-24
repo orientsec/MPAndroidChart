@@ -28,6 +28,7 @@ import com.github.mikephil.charting.jobs.AnimatedZoomJob;
 import com.github.mikephil.charting.jobs.MoveViewJob;
 import com.github.mikephil.charting.jobs.ZoomJob;
 import com.github.mikephil.charting.listener.BarLineChartTouchListener;
+import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnDrawListener;
 import com.github.mikephil.charting.renderer.XAxisRenderer;
 import com.github.mikephil.charting.renderer.YAxisRenderer;
@@ -35,6 +36,9 @@ import com.github.mikephil.charting.utils.MPPointD;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.Transformer;
 import com.github.mikephil.charting.utils.Utils;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Base-class of LineChart, BarChart, ScatterChart and CandleStickChart.
@@ -132,6 +136,10 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
     protected Transformer mRightAxisTransformer;
 
     protected XAxisRenderer mXAxisRenderer;
+    /**
+     * 关联的listener
+     */
+    protected Set<ChartTouchListener> mRelateListeners;
 
     // /** the approximator object used for data filtering */
     // private Approximator mApproximator;
@@ -166,6 +174,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
         setHighlighter(new ChartHighlighter(this));
 
         mChartTouchListener = new BarLineChartTouchListener(this, mViewPortHandler.getMatrixTouch(), 3f);
+        mRelateListeners = new HashSet<>();
 
         mGridBackgroundPaint = new Paint();
         mGridBackgroundPaint.setStyle(Style.FILL);
@@ -562,15 +571,25 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
     public boolean onTouchEvent(MotionEvent event) {
         super.onTouchEvent(event);
 
-        if (mChartTouchListener == null || mData == null)
+        if (mChartTouchListener == null || mData == null || !mTouchEnabled)
             return false;
-
+        for (ChartTouchListener listener : mRelateListeners) {
+            if (null != listener) {
+                listener.onTouch(null, event);
+            }
+        }
         // check if touch gestures are enabled
-        return mTouchEnabled && mChartTouchListener.onTouch(this, event);
+        return mChartTouchListener.onTouch(this, event);
     }
 
     @Override
     public void computeScroll() {
+
+        for (ChartTouchListener listener : mRelateListeners) {
+            if (null != listener && listener instanceof BarLineChartTouchListener) {
+                ((BarLineChartTouchListener) listener).computeScroll();
+            }
+        }
 
         if (mChartTouchListener instanceof BarLineChartTouchListener)
             ((BarLineChartTouchListener) mChartTouchListener).computeScroll();
@@ -1580,6 +1599,18 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
         if (mAxisRight.isInverted())
             return true;
         return false;
+    }
+
+    public void addRelateTouchListener(ChartTouchListener l) {
+        this.mRelateListeners.add(l);
+    }
+
+    public void removeRelateTouchListener(ChartTouchListener l) {
+        this.mRelateListeners.remove(l);
+    }
+
+    public void removeAllRelateListeners() {
+        this.mRelateListeners.clear();
     }
 
     /**
