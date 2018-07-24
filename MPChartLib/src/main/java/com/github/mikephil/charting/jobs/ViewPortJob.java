@@ -13,12 +13,12 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
  * modifications until the onSizeChanged(...) method of the chart-view is called.
  * This is especially important if viewport modifying methods are called on the chart
  * directly after initialization.
- * 
+ *
  * @author Philipp Jahoda
  */
 public abstract class ViewPortJob extends ObjectPool.Poolable implements Runnable {
 
-    protected float[] pts = new float[2];
+    float[] pts = new float[2];
 
     protected ViewPortHandler mViewPortHandler;
     protected float xValue = 0f;
@@ -26,8 +26,8 @@ public abstract class ViewPortJob extends ObjectPool.Poolable implements Runnabl
     protected Transformer mTrans;
     protected View view;
 
-    public ViewPortJob(ViewPortHandler viewPortHandler, float xValue, float yValue,
-                       Transformer trans, View v) {
+    ViewPortJob(ViewPortHandler viewPortHandler, float xValue, float yValue,
+                Transformer trans, View v) {
 
         this.mViewPortHandler = viewPortHandler;
         this.xValue = xValue;
