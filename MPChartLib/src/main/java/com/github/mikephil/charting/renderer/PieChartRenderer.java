@@ -16,6 +16,7 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
@@ -639,7 +640,7 @@ public class PieChartRenderer extends DataRenderer {
     }
 
     @Override
-    public void drawExtras(Canvas c) {
+    public void drawExtras(Chart chart, Canvas c) {
         // drawCircles(c);
         drawHole(c);
         c.drawBitmap(mDrawBitmap.get(), 0, 0, null);

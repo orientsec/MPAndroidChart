@@ -353,6 +353,7 @@ public class RelateListenerActivity extends DemoBase {
             set1.setFormLineWidth(1f);
             set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
             set1.setFormSize(15.f);
+            set1.setLastPointTwinkle(true);
 
             if (Utils.getSDKInt() >= 18) {
                 // fill drawable only supported on api level 18 and above

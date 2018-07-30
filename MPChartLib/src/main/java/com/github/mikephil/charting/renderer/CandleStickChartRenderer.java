@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.highlight.Highlight;
@@ -328,7 +329,7 @@ public class CandleStickChartRenderer extends LineScatterCandleRadarRenderer {
     }
 
     @Override
-    public void drawExtras(Canvas c) {
+    public void drawExtras(Chart chart, Canvas c) {
     }
 
     @Override

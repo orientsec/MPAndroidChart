@@ -7,6 +7,7 @@ import android.graphics.Paint.Style;
 import android.graphics.drawable.Drawable;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.data.BubbleData;
 import com.github.mikephil.charting.data.BubbleEntry;
 import com.github.mikephil.charting.highlight.Highlight;
@@ -193,7 +194,7 @@ public class BubbleChartRenderer extends BarLineScatterCandleBubbleRenderer {
     }
 
     @Override
-    public void drawExtras(Canvas c) {
+    public void drawExtras(Chart chart, Canvas c) {
     }
 
     private float[] _hsvBuffer = new float[3];

@@ -5,9 +5,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RadialGradient;
+import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -26,6 +30,8 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class LineChartRenderer extends LineRadarRenderer {
 
@@ -591,8 +597,99 @@ public class LineChartRenderer extends LineRadarRenderer {
     }
 
     @Override
-    public void drawExtras(Canvas c) {
+    public void drawExtras(Chart chart, Canvas c) {
         drawCircles(c);
+        drawTwinkleCircle(chart, c);
+    }
+
+    private Timer mTwinkleTimer = null;
+    private Paint mTwinklePaint = new Paint();
+    private float mTwinkleX = -1;
+    private float mTwinkleY = -1;
+    private int mTwinkleRadius = 10;
+    private int mTwinkleAlpha = 200;
+
+    protected void drawTwinkleCircle(final Chart chart, final Canvas canvas) {
+        calculateTwinklePosition();
+        if (mTwinkleX == -1 || mTwinkleY == -1) {
+            return;
+        }
+
+        if (mTwinklePaint == null) {
+            mTwinklePaint = new Paint();
+        }
+
+        canvas.drawCircle(mTwinkleX, mTwinkleY, mTwinkleRadius, mTwinklePaint);
+        final Paint paint = new Paint();
+        paint.setColor(0x9f328deb);
+        canvas.drawCircle(mTwinkleX, mTwinkleY, 10, paint);
+
+        startTwinkle(chart);
+    }
+
+    private void calculateTwinklePosition() {
+        mTwinkleX = -1;
+        mTwinkleY = -1;
+        List<ILineDataSet> dataSets = mChart.getLineData().getDataSets();
+        if (dataSets.isEmpty()) {
+            return;
+        }
+        float phaseY = mAnimator.getPhaseY();
+        for (int i = 0; i < dataSets.size(); i++) {
+            ILineDataSet dataSet = dataSets.get(i);
+            Transformer trans = mChart.getTransformer(dataSet.getAxisDependency());
+            int count = dataSet.getEntryCount();
+            if (!dataSet.isLastPointTwinkle() || count <= 0) {
+                continue;
+            }
+
+            Entry entry = dataSet.getEntryForIndex(count - 1);
+            mCirclesBuffer[0] = entry.getX();
+            mCirclesBuffer[1] = entry.getY() * phaseY;
+            trans.pointValuesToPixel(mCirclesBuffer);
+            mTwinkleX = mCirclesBuffer[0];
+            mTwinkleY = mCirclesBuffer[1];
+            break;
+        }
+    }
+
+    private void startTwinkle(final Chart chart) {
+        if (mTwinkleTimer == null) {
+            mTwinkleTimer = new Timer();
+            TimerTask task = new TimerTask() {
+
+                @Override
+                public void run() {
+                    if (mTwinkleX > -1 && mTwinkleY > -1) {
+                        mTwinkleAlpha -= 50;
+                        mTwinkleRadius += 5;
+                        if (mTwinkleAlpha < 0) {
+                            mTwinkleAlpha = 200;
+                            mTwinkleRadius = 10;
+                        }
+                        RadialGradient gradient = new RadialGradient(mTwinkleX, mTwinkleY, mTwinkleRadius, 0x7fffffff, 0xff328deb, Shader.TileMode.REPEAT);
+                        mTwinklePaint.setShader(gradient);
+                        mTwinklePaint.setAlpha(mTwinkleAlpha);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            if (chart.isAttachedToWindow()) {
+                                chart.postInvalidate((int) mTwinkleX - 15, (int) mTwinkleY - 15, (int) mTwinkleX + 15, (int) mTwinkleY + 15);
+                            }
+                        } else {
+                            chart.postInvalidate((int) mTwinkleX - 15, (int) mTwinkleY - 15, (int) mTwinkleX + 15, (int) mTwinkleY + 15);
+                        }
+                    }
+                }
+            };
+            mTwinkleTimer.schedule(task, 100, 400);
+        }
+    }
+
+    private void stopTwinkle() {
+        if (mTwinkleTimer != null) {
+            mTwinkleTimer.cancel();
+            mTwinkleTimer.purge();
+            mTwinkleTimer = null;
+        }
     }
 
     /**
@@ -729,6 +826,11 @@ public class LineChartRenderer extends LineRadarRenderer {
      */
     public Bitmap.Config getBitmapConfig() {
         return mBitmapConfig;
+    }
+
+    public void releaseSrc() {
+        releaseBitmap();
+        stopTwinkle();
     }
 
     /**

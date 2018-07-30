@@ -64,6 +64,8 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
 
     private boolean mDrawCircleHole = true;
 
+    private boolean mLastPointTwinkle = false;
+
 
     public LineDataSet(List<Entry> yVals, String label) {
         super(yVals, label);
@@ -212,7 +214,7 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
 
     @Override
     public boolean isDashedLineEnabled() {
-        return mDashPathEffect == null ? false : true;
+        return mDashPathEffect != null;
     }
 
     @Override
@@ -373,6 +375,20 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
     @Override
     public IFillFormatter getFillFormatter() {
         return mFillFormatter;
+    }
+
+    /**
+     * Set Last point twinkle
+     *
+     * @param mLastPointTwinkle
+     */
+    public void setLastPointTwinkle(boolean mLastPointTwinkle) {
+        this.mLastPointTwinkle = mLastPointTwinkle;
+    }
+
+    @Override
+    public boolean isLastPointTwinkle() {
+        return mLastPointTwinkle;
     }
 
     public enum Mode {

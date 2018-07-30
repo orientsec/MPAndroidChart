@@ -94,4 +94,11 @@ public interface ILineDataSet extends ILineRadarDataSet<Entry> {
      * @return
      */
     IFillFormatter getFillFormatter();
+
+    /**
+     * is last point twinkle
+     *
+     * @return
+     */
+    boolean isLastPointTwinkle();
 }

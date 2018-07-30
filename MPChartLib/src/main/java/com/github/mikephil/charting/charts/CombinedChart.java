@@ -18,6 +18,8 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.dataprovider.CombinedDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.renderer.CombinedChartRenderer;
+import com.github.mikephil.charting.renderer.DataRenderer;
+import com.github.mikephil.charting.renderer.LineChartRenderer;
 
 /**
  * This chart class allows the combination of lines, bars, scatter and candle
@@ -93,7 +95,7 @@ public class CombinedChart extends BarLineChartBase<CombinedData> implements Com
     public void setData(CombinedData data) {
         super.setData(data);
         setHighlighter(new CombinedHighlighter(this, this));
-        ((CombinedChartRenderer)mRenderer).createRenderers();
+        ((CombinedChartRenderer) mRenderer).createRenderers();
         mRenderer.initBuffers();
     }
 
@@ -269,4 +271,15 @@ public class CombinedChart extends BarLineChartBase<CombinedData> implements Com
         }
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        if (mRenderer != null && mRenderer instanceof CombinedChartRenderer) {
+            for (DataRenderer renderer : ((CombinedChartRenderer) mRenderer).getSubRenderers()) {
+                if (renderer != null && renderer instanceof LineChartRenderer) {
+                    ((LineChartRenderer) renderer).releaseSrc();
+                }
+            }
+        }
+        super.onDetachedFromWindow();
+    }
 }

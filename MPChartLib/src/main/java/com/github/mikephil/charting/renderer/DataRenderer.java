@@ -8,6 +8,7 @@ import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
@@ -153,9 +154,10 @@ public abstract class DataRenderer extends Renderer {
     /**
      * Draws any kind of additional information (e.g. line-circles).
      *
+     * @param chart
      * @param c
      */
-    public abstract void drawExtras(Canvas c);
+    public abstract void drawExtras(Chart chart, Canvas c);
 
     /**
      * Draws all highlight indicators for the values that are currently highlighted.
