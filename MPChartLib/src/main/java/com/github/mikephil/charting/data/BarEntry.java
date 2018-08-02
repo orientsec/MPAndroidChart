@@ -2,6 +2,7 @@ package com.github.mikephil.charting.data;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 
 import com.github.mikephil.charting.highlight.Range;
 
@@ -32,6 +33,9 @@ public class BarEntry extends Entry {
      * the sum of all positive values this entry (if stacked) contains
      */
     private float mPositiveSum;
+
+    @ColorInt
+    private int mColor = -1;
 
     /**
      * Constructor for normal bars (not stacked).
@@ -296,6 +300,15 @@ public class BarEntry extends Entry {
                 posRemain += value;
             }
         }
+    }
+
+    @ColorInt
+    public int getColor() {
+        return mColor;
+    }
+
+    public void setColor(@ColorInt int mColor) {
+        this.mColor = mColor;
     }
 }
 
