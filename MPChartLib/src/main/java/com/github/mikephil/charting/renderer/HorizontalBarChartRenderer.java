@@ -126,7 +126,10 @@ public class HorizontalBarChartRenderer extends BarChartRenderer {
             if (!mViewPortHandler.isInBoundsBottom(buffer.buffer[j + 1]))
                 continue;
 
-            if (!isSingleColor) {
+            BarEntry entry = dataSet.getEntryForIndex(j / 4);
+            if (entry != null && entry.getColor() != -1) {
+                mRenderPaint.setColor(entry.getColor());
+            } else if (!isSingleColor) {
                 // Set the color for the currently drawn value. If the index
                 // is out of bounds, reuse colors.
                 mRenderPaint.setColor(dataSet.getColor(j / 4));
