@@ -2,6 +2,7 @@
 package com.github.mikephil.charting.renderer;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -371,7 +372,7 @@ public class LegendRenderer extends Renderer {
                         if (direction == Legend.LegendDirection.RIGHT_TO_LEFT)
                             posX -= calculatedLabelSizes.get(i).width;
 
-                        drawLabel(c, posX, posY + labelLineHeight, e.label);
+                        drawLabel(c, posX, posY + labelLineHeight, e.label, getLabelColor(e));
 
                         if (direction == Legend.LegendDirection.LEFT_TO_RIGHT)
                             posX += calculatedLabelSizes.get(i).width;
@@ -444,10 +445,10 @@ public class LegendRenderer extends Renderer {
                             posX -= Utils.calcTextWidth(mLegendLabelPaint, e.label);
 
                         if (!wasStacked) {
-                            drawLabel(c, posX, posY + labelLineHeight, e.label);
+                            drawLabel(c, posX, posY + labelLineHeight, e.label, getLabelColor(e));
                         } else {
                             posY += labelLineHeight + labelLineSpacing;
-                            drawLabel(c, posX, posY + labelLineHeight, e.label);
+                            drawLabel(c, posX, posY + labelLineHeight, e.label, getLabelColor(e));
                         }
 
                         // make a step down
@@ -522,8 +523,7 @@ public class LegendRenderer extends Renderer {
                 c.drawRect(x, y - half, x + formSize, y + half, mLegendFormPaint);
                 break;
 
-            case LINE:
-            {
+            case LINE: {
                 final float formLineWidth = Utils.convertDpToPixel(
                         Float.isNaN(entry.formLineWidth)
                                 ? legend.getFormLineWidth()
@@ -540,7 +540,7 @@ public class LegendRenderer extends Renderer {
                 mLineFormPath.lineTo(x + formSize, y);
                 c.drawPath(mLineFormPath, mLegendFormPaint);
             }
-                break;
+            break;
         }
 
         c.restoreToCount(restoreCount);
@@ -549,12 +549,22 @@ public class LegendRenderer extends Renderer {
     /**
      * Draws the provided label at the given position.
      *
-     * @param c     canvas to draw with
+     * @param c          canvas to draw with
      * @param x
      * @param y
-     * @param label the label to draw
+     * @param label      the label to draw
+     * @param labelColor
      */
-    protected void drawLabel(Canvas c, float x, float y, String label) {
+    protected void drawLabel(Canvas c, float x, float y, String label, int labelColor) {
+        mLegendLabelPaint.setColor(labelColor);
         c.drawText(label, x, y, mLegendLabelPaint);
+    }
+
+    protected int getLabelColor(LegendEntry entry) {
+        if (entry.labelColor != Color.TRANSPARENT) {
+            return entry.labelColor;
+        } else {
+            return mLegend.getTextColor();
+        }
     }
 }
