@@ -158,7 +158,6 @@ public abstract class DataSet<T extends Entry> extends BaseDataSet<T> {
     public abstract DataSet<T> copy();
 
     /**
-     *
      * @param dataSet
      */
     protected void copy(DataSet dataSet) {
@@ -226,6 +225,44 @@ public abstract class DataSet<T extends Entry> extends BaseDataSet<T> {
         } else {
             mValues.add(e);
         }
+    }
+
+    @Override
+    public void addAllEntry(List<T> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        for (T e : list) {
+            addEntry(e);
+        }
+    }
+
+    @Override
+    public void addAllEntryOrdered(List<T> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        for (T e : list) {
+            addEntryOrdered(e);
+        }
+    }
+
+    @Override
+    public void addAllEntryAtFirstPos(List<T> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        if (mValues == null) {
+            mValues = new ArrayList<>();
+        }
+        int size = list.size();
+        for (T e : mValues) {
+            final float originalX = e.getX();
+            e.setX(originalX + size);
+        }
+        mValues.addAll(0, list);
+
+        notifyDataSetChanged();
     }
 
     @Override

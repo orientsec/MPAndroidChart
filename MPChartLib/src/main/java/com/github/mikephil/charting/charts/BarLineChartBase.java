@@ -724,20 +724,15 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
     public void zoomAndCenterAnimated(float scaleX, float scaleY, float xValue, float yValue, AxisDependency axis,
                                       long duration) {
 
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
+        MPPointD origin = getValuesByTouchPoint(mViewPortHandler.contentLeft(), mViewPortHandler.contentTop(), axis);
 
-            MPPointD origin = getValuesByTouchPoint(mViewPortHandler.contentLeft(), mViewPortHandler.contentTop(), axis);
+        Runnable job = AnimatedZoomJob.getInstance(mViewPortHandler, this, getTransformer(axis), getAxis(axis), mXAxis
+                        .mAxisRange, scaleX, scaleY, mViewPortHandler.getScaleX(), mViewPortHandler.getScaleY(),
+                xValue, yValue, (float) origin.x, (float) origin.y, duration);
+        addViewportJob(job);
 
-            Runnable job = AnimatedZoomJob.getInstance(mViewPortHandler, this, getTransformer(axis), getAxis(axis), mXAxis
-                            .mAxisRange, scaleX, scaleY, mViewPortHandler.getScaleX(), mViewPortHandler.getScaleY(),
-                    xValue, yValue, (float) origin.x, (float) origin.y, duration);
-            addViewportJob(job);
+        MPPointD.recycleInstance(origin);
 
-            MPPointD.recycleInstance(origin);
-
-        } else {
-            Log.e(LOG_TAG, "Unable to execute zoomAndCenterAnimated(...) on API level < 11");
-        }
     }
 
     protected Matrix mFitScreenMatrixBuffer = new Matrix();
@@ -890,21 +885,16 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
     @TargetApi(11)
     public void moveViewToAnimated(float xValue, float yValue, AxisDependency axis, long duration) {
 
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
+        MPPointD bounds = getValuesByTouchPoint(mViewPortHandler.contentLeft(), mViewPortHandler.contentTop(), axis);
 
-            MPPointD bounds = getValuesByTouchPoint(mViewPortHandler.contentLeft(), mViewPortHandler.contentTop(), axis);
+        float yInView = getAxisRange(axis) / mViewPortHandler.getScaleY();
 
-            float yInView = getAxisRange(axis) / mViewPortHandler.getScaleY();
+        Runnable job = AnimatedMoveViewJob.getInstance(mViewPortHandler, xValue, yValue + yInView / 2f,
+                getTransformer(axis), this, (float) bounds.x, (float) bounds.y, duration);
 
-            Runnable job = AnimatedMoveViewJob.getInstance(mViewPortHandler, xValue, yValue + yInView / 2f,
-                    getTransformer(axis), this, (float) bounds.x, (float) bounds.y, duration);
+        addViewportJob(job);
 
-            addViewportJob(job);
-
-            MPPointD.recycleInstance(bounds);
-        } else {
-            Log.e(LOG_TAG, "Unable to execute moveViewToAnimated(...) on API level < 11");
-        }
+        MPPointD.recycleInstance(bounds);
     }
 
     /**
@@ -957,23 +947,18 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
     @TargetApi(11)
     public void centerViewToAnimated(float xValue, float yValue, AxisDependency axis, long duration) {
 
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
+        MPPointD bounds = getValuesByTouchPoint(mViewPortHandler.contentLeft(), mViewPortHandler.contentTop(), axis);
 
-            MPPointD bounds = getValuesByTouchPoint(mViewPortHandler.contentLeft(), mViewPortHandler.contentTop(), axis);
+        float yInView = getAxisRange(axis) / mViewPortHandler.getScaleY();
+        float xInView = getXAxis().mAxisRange / mViewPortHandler.getScaleX();
 
-            float yInView = getAxisRange(axis) / mViewPortHandler.getScaleY();
-            float xInView = getXAxis().mAxisRange / mViewPortHandler.getScaleX();
+        Runnable job = AnimatedMoveViewJob.getInstance(mViewPortHandler,
+                xValue - xInView / 2f, yValue + yInView / 2f,
+                getTransformer(axis), this, (float) bounds.x, (float) bounds.y, duration);
 
-            Runnable job = AnimatedMoveViewJob.getInstance(mViewPortHandler,
-                    xValue - xInView / 2f, yValue + yInView / 2f,
-                    getTransformer(axis), this, (float) bounds.x, (float) bounds.y, duration);
+        addViewportJob(job);
 
-            addViewportJob(job);
-
-            MPPointD.recycleInstance(bounds);
-        } else {
-            Log.e(LOG_TAG, "Unable to execute centerViewToAnimated(...) on API level < 11");
-        }
+        MPPointD.recycleInstance(bounds);
     }
 
     /**
@@ -1391,8 +1376,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
     public float getLowestVisibleX() {
         getTransformer(AxisDependency.LEFT).getValuesByTouchPoint(mViewPortHandler.contentLeft(),
                 mViewPortHandler.contentBottom(), posForGetLowestVisibleX);
-        float result = (float) Math.max(mXAxis.mAxisMinimum, posForGetLowestVisibleX.x);
-        return result;
+        return (float) Math.max(mXAxis.mAxisMinimum, posForGetLowestVisibleX.x);
     }
 
     /**
@@ -1410,8 +1394,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
     public float getHighestVisibleX() {
         getTransformer(AxisDependency.LEFT).getValuesByTouchPoint(mViewPortHandler.contentRight(),
                 mViewPortHandler.contentBottom(), posForGetHighestVisibleX);
-        float result = (float) Math.min(mXAxis.mAxisMaximum, posForGetHighestVisibleX.x);
-        return result;
+        return (float) Math.min(mXAxis.mAxisMaximum, posForGetHighestVisibleX.x);
     }
 
     /**
