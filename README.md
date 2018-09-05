@@ -23,7 +23,7 @@ allprojects {
 - **App level `build.gradle`**
 ```gradle
 dependencies {
-    implementation 'com.github.orientsec:MPAndroidChart:v4.0.0-alpha'
+    implementation 'com.github.orientsec:MPAndroidChart:v4.0.2-alpha'
 }
 ```
 
@@ -41,7 +41,7 @@ dependencies {
 <dependency>
     <groupId>com.github.orientsec</groupId>
     <artifactId>MPAndroidChart</artifactId>
-    <version>v4.0.0-alpha</version>
+    <version>v4.0.2-alpha</version>
 </dependency>
 ```
 
@@ -51,7 +51,7 @@ dependencies {
 
 See the [**documentation**](https://github.com/PhilJay/MPAndroidChart/wiki) for examples and general use of MPAndroidChart.
 
-See the [**javadocs**](https://jitpack.io/com/github/orientsec/MPAndroidChart/v4.0.0-alpha/javadoc/) for more advanced documentation.
+See the [**javadocs**](https://jitpack.io/com/github/orientsec/MPAndroidChart/v4.0.2-alpha/javadoc/) for more advanced documentation.
 
 <br/>
 
