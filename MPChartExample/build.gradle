@@ -60,6 +60,7 @@ dependencies {
 
     implementation project(':MPChartLib')
     implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     //compile 'io.realm:realm-android:0.87.5' // dependency for realm-database API (http://realm.io)
     //compile 'com.github.PhilJay:MPAndroidChart:v2.2.5'
 }
