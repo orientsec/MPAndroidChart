@@ -608,6 +608,7 @@ public class LineChartRenderer extends LineRadarRenderer {
     private float mTwinkleY = -1;
     private int mTwinkleRadius = 10;
     private int mTwinkleAlpha = 200;
+    private Chart tempChart;
 
     protected void drawTwinkleCircle(final Chart chart, final Canvas canvas) {
         calculateTwinklePosition();
@@ -654,6 +655,7 @@ public class LineChartRenderer extends LineRadarRenderer {
     }
 
     private void startTwinkle(final Chart chart) {
+        tempChart = chart;
         if (mTwinkleTimer == null) {
             mTwinkleTimer = new Timer();
             TimerTask task = new TimerTask() {
@@ -670,12 +672,18 @@ public class LineChartRenderer extends LineRadarRenderer {
                         RadialGradient gradient = new RadialGradient(mTwinkleX, mTwinkleY, mTwinkleRadius, 0x7fffffff, 0xff328deb, Shader.TileMode.REPEAT);
                         mTwinklePaint.setShader(gradient);
                         mTwinklePaint.setAlpha(mTwinkleAlpha);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                            if (chart.isAttachedToWindow()) {
-                                chart.postInvalidate((int) mTwinkleX - 15, (int) mTwinkleY - 15, (int) mTwinkleX + 15, (int) mTwinkleY + 15);
+                        try {
+                            if (tempChart != null) {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                    if (tempChart.isAttachedToWindow()) {
+                                        tempChart.postInvalidate((int) mTwinkleX - 15, (int) mTwinkleY - 15, (int) mTwinkleX + 15, (int) mTwinkleY + 15);
+                                    }
+                                } else {
+                                    tempChart.postInvalidate((int) mTwinkleX - 15, (int) mTwinkleY - 15, (int) mTwinkleX + 15, (int) mTwinkleY + 15);
+                                }
                             }
-                        } else {
-                            chart.postInvalidate((int) mTwinkleX - 15, (int) mTwinkleY - 15, (int) mTwinkleX + 15, (int) mTwinkleY + 15);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
                 }
@@ -685,6 +693,7 @@ public class LineChartRenderer extends LineRadarRenderer {
     }
 
     private void stopTwinkle() {
+        tempChart = null;
         if (mTwinkleTimer != null) {
             mTwinkleTimer.cancel();
             mTwinkleTimer.purge();
