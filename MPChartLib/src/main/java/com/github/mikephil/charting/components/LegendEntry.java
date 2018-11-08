@@ -3,7 +3,6 @@ package com.github.mikephil.charting.components;
 
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
-import android.support.annotation.ColorInt;
 
 import com.github.mikephil.charting.utils.ColorTemplate;
 
@@ -72,7 +71,6 @@ public class LegendEntry {
     /**
      * the text color to use for the labels
      */
-    @ColorInt
     public int labelColor = Color.TRANSPARENT;
 
     /**
