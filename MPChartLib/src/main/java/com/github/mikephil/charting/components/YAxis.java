@@ -356,6 +356,7 @@ public class YAxis extends AxisBase {
     /**
      * Returns true if autoscale restriction for axis min value is enabled
      */
+    @Deprecated
     public boolean isUseAutoScaleMinRestriction( ) {
         return mUseAutoScaleRestrictionMin;
     }
@@ -363,6 +364,7 @@ public class YAxis extends AxisBase {
     /**
      * Sets autoscale restriction for axis min value as enabled/disabled
      */
+    @Deprecated
     public void setUseAutoScaleMinRestriction( boolean isEnabled ) {
         mUseAutoScaleRestrictionMin = isEnabled;
     }
@@ -370,6 +372,7 @@ public class YAxis extends AxisBase {
     /**
      * Returns true if autoscale restriction for axis max value is enabled
      */
+    @Deprecated
     public boolean isUseAutoScaleMaxRestriction() {
         return mUseAutoScaleRestrictionMax;
     }
@@ -377,6 +380,7 @@ public class YAxis extends AxisBase {
     /**
      * Sets autoscale restriction for axis max value as enabled/disabled
      */
+    @Deprecated
     public void setUseAutoScaleMaxRestriction( boolean isEnabled ) {
         mUseAutoScaleRestrictionMax = isEnabled;
     }
@@ -388,24 +392,6 @@ public class YAxis extends AxisBase {
         float min = dataMin;
         float max = dataMax;
 
-        // if custom, use value as is, else use data value
-        if( mCustomAxisMin ) {
-            if( mUseAutoScaleRestrictionMin ) {
-                min = Math.min( dataMin, mAxisMinimum );
-            } else {
-                min = mAxisMinimum;
-            }
-        }
-
-        if( mCustomAxisMax ) {
-            if( mUseAutoScaleRestrictionMax ) {
-                max = Math.max( max, mAxisMaximum );
-            } else {
-                max = mAxisMaximum;
-            }
-        }
-
-        // temporary range (before calculations)
         float range = Math.abs(max - min);
 
         // in case all values are equal
@@ -414,13 +400,13 @@ public class YAxis extends AxisBase {
             min = min - 1f;
         }
 
-        float bottomSpace = range / 100f * getSpaceBottom();
-        this.mAxisMinimum = (min - bottomSpace);
-            
-        float topSpace = range / 100f * getSpaceTop();
-        this.mAxisMaximum = (max + topSpace);
+        // recalculate
+        range = Math.abs(max - min);
 
-        // calc actual range
-        this.mAxisRange = Math.abs(this.mAxisMaximum - this.mAxisMinimum);
+        // calc extra spacing
+        this.mAxisMinimum = mCustomAxisMin ? this.mAxisMinimum : min - (range / 100f) * getSpaceBottom();
+        this.mAxisMaximum = mCustomAxisMax ? this.mAxisMaximum : max + (range / 100f) * getSpaceTop();
+
+        this.mAxisRange = Math.abs(this.mAxisMinimum - this.mAxisMaximum);
     }
 }

@@ -1,4 +1,3 @@
-
 package com.github.mikephil.charting.utils;
 
 import android.annotation.SuppressLint;
@@ -20,7 +19,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
-import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.List;
 
@@ -210,15 +209,14 @@ public abstract class Utils {
             1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000
     };
 
-    private static IValueFormatter mDefaultValueFormatter = generateDefaultValueFormatter();
+    private static ValueFormatter mDefaultValueFormatter = generateDefaultValueFormatter();
 
-    private static IValueFormatter generateDefaultValueFormatter() {
-        final DefaultValueFormatter formatter = new DefaultValueFormatter(1);
-        return formatter;
+    private static ValueFormatter generateDefaultValueFormatter() {
+        return new DefaultValueFormatter(1);
     }
 
     /// - returns: The default value formatter used for all chart components that needs a default
-    public static IValueFormatter getDefaultValueFormatter()
+    public static ValueFormatter getDefaultValueFormatter()
     {
         return mDefaultValueFormatter;
     }
@@ -334,11 +332,11 @@ public abstract class Utils {
      * @return
      */
     public static float roundToNextSignificant(double number) {
-        if (Double.isInfinite(number) || 
-            Double.isNaN(number) || 
+        if (Double.isInfinite(number) ||
+            Double.isNaN(number) ||
             number == 0.0)
             return 0;
-        
+
         final float d = (float) Math.ceil((float) Math.log10(number < 0 ? -number : number));
         final int pw = 1 - (int) d;
         final float magnitude = (float) Math.pow(10, pw);
@@ -356,10 +354,10 @@ public abstract class Utils {
     public static int getDecimals(float number) {
 
         float i = roundToNextSignificant(number);
-        
+
         if (Float.isInfinite(i))
             return 0;
-        
+
         return (int) Math.ceil(-Math.log10(i)) + 2;
     }
 
