@@ -290,15 +290,17 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
         setupDefaultFormatter(data.getYMin(), data.getYMax());
 
         for (IDataSet set : mData.getDataSets()) {
-            if (set.needsFormatter() || set.getValueFormatter() == mDefaultValueFormatter)
+            if (set.needsFormatter() || set.getValueFormatter() == mDefaultValueFormatter) {
                 set.setValueFormatter(mDefaultValueFormatter);
+            }
         }
 
         // let the chart know there is new data
         notifyDataSetChanged();
 
-        if (mLogEnabled)
+        if (mLogEnabled) {
             Log.i(LOG_TAG, "Data is set.");
+        }
     }
 
     /**
@@ -622,12 +624,13 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
 
         Entry e = null;
 
-        if (high == null)
+        if (high == null) {
             mIndicesToHighlight = null;
-        else {
+        } else {
 
-            if (mLogEnabled)
+            if (mLogEnabled) {
                 Log.i(LOG_TAG, "Highlighted: " + high.toString());
+            }
 
             e = mData.getEntryForHighlight(high);
             if (e == null) {
@@ -646,9 +649,9 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
 
         if (callListener && mSelectionListener != null) {
 
-            if (!valuesToHighlight())
+            if (!valuesToHighlight()) {
                 mSelectionListener.onNothingSelected();
-            else {
+            } else {
                 // notify the listener
                 mSelectionListener.onValueSelected(e, high);
             }
@@ -949,6 +952,7 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
      *
      * @return
      */
+    @Override
     public IValueFormatter getDefaultValueFormatter() {
         return mDefaultValueFormatter;
     }
