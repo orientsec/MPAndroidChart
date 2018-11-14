@@ -8,7 +8,8 @@ import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.highlight.Highlight;
 
 /**
- * Created by philipp on 12/06/15.
+ * @author philipp
+ * @date 12/06/15
  */
 public abstract class ChartTouchListener<T extends Chart<?>> extends GestureDetector.SimpleOnGestureListener implements View.OnTouchListener {
 
@@ -65,8 +66,9 @@ public abstract class ChartTouchListener<T extends Chart<?>> extends GestureDete
 
         OnChartGestureListener l = mChart.getOnChartGestureListener();
 
-        if (l != null)
+        if (l != null) {
             l.onChartGestureStart(me, mLastGesture);
+        }
     }
 
     /**
@@ -78,8 +80,9 @@ public abstract class ChartTouchListener<T extends Chart<?>> extends GestureDete
 
         OnChartGestureListener l = mChart.getOnChartGestureListener();
 
-        if (l != null)
+        if (l != null) {
             l.onChartGestureEnd(me, mLastGesture);
+        }
     }
 
     /**
