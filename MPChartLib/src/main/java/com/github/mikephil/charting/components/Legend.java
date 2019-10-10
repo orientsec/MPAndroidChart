@@ -250,11 +250,6 @@ public class Legend extends ComponentBase {
         mExtraEntries = entries;
     }
 
-    @Deprecated
-    public void setExtra(List<Integer> colors, List<String> labels) {
-        setExtra(Utils.convertIntegers(colors), Utils.convertStrings(labels));
-    }
-
     /**
      * Entries that will be appended to the end of the auto calculated
      *   entries after calculating the legend.
