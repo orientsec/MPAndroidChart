@@ -127,23 +127,22 @@ public abstract class ChartData<T extends IDataSet<? extends Entry>> {
      * Calc minimum and maximum values (both x and y) over all DataSets.
      */
     protected void calcMinMax() {
-
-        if (mDataSets == null)
-            return;
-
         mYMax = -Float.MAX_VALUE;
         mYMin = Float.MAX_VALUE;
         mXMax = -Float.MAX_VALUE;
         mXMin = Float.MAX_VALUE;
 
-        for (T set : mDataSets) {
-            calcMinMax(set);
-        }
-
         mLeftAxisMax = -Float.MAX_VALUE;
         mLeftAxisMin = Float.MAX_VALUE;
         mRightAxisMax = -Float.MAX_VALUE;
         mRightAxisMin = Float.MAX_VALUE;
+
+        if (mDataSets == null)
+            return;
+
+        for (T set : mDataSets) {
+            calcMinMax(set);
+        }
 
         // left axis
         T firstLeft = getFirstLeft(mDataSets);

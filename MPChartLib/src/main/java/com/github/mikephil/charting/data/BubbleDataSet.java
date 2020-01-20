@@ -50,6 +50,18 @@ public class BubbleDataSet extends BarLineScatterCandleBubbleDataSet<BubbleEntry
         return copied;
     }
 
+    @Override
+    public DataSet<BubbleEntry> copyDataConfig() {
+        return copyDataConfig(new ArrayList<BubbleEntry>());
+    }
+
+    @Override
+    public DataSet<BubbleEntry> copyDataConfig(List<BubbleEntry> values) {
+        BubbleDataSet copied = new BubbleDataSet(values, getLabel());
+        copy(copied);
+        return copied;
+    }
+
     protected void copy(BubbleDataSet bubbleDataSet) {
         bubbleDataSet.mHighlightCircleWidth = mHighlightCircleWidth;
         bubbleDataSet.mNormalizeSize = mNormalizeSize;

@@ -110,6 +110,18 @@ public class RadarDataSet extends LineRadarDataSet<RadarEntry> implements IRadar
         return copied;
     }
 
+    @Override
+    public DataSet<RadarEntry> copyDataConfig() {
+        return copyDataConfig(new ArrayList<RadarEntry>());
+    }
+
+    @Override
+    public DataSet<RadarEntry> copyDataConfig(List<RadarEntry> values) {
+        RadarDataSet copied = new RadarDataSet(values, getLabel());
+        copy(copied);
+        return copied;
+    }
+
     protected void copy(RadarDataSet radarDataSet) {
         super.copy(radarDataSet);
         radarDataSet.mDrawHighlightCircleEnabled = mDrawHighlightCircleEnabled;

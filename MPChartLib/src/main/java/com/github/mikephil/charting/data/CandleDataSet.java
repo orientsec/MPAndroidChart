@@ -88,6 +88,18 @@ public class CandleDataSet extends LineScatterCandleRadarDataSet<CandleEntry> im
         return copied;
     }
 
+    @Override
+    public DataSet<CandleEntry> copyDataConfig() {
+        return copyDataConfig(new ArrayList<CandleEntry>());
+    }
+
+    @Override
+    public DataSet<CandleEntry> copyDataConfig(List<CandleEntry> values) {
+        CandleDataSet copied = new CandleDataSet(values, getLabel());
+        copy(copied);
+        return copied;
+    }
+
     protected void copy(CandleDataSet candleDataSet) {
         super.copy(candleDataSet);
         candleDataSet.mShadowWidth = mShadowWidth;

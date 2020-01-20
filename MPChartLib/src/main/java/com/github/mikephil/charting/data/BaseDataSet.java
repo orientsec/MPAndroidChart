@@ -540,7 +540,7 @@ public abstract class BaseDataSet<T extends Entry> implements IDataSet<T> {
         baseDataSet.mIconsOffset = mIconsOffset;
         baseDataSet.mValueColors = mValueColors;
         baseDataSet.mValueFormatter = mValueFormatter;
-        baseDataSet.mValueColors = mValueColors;
+//        baseDataSet.mValueColors = mValueColors;
         baseDataSet.mValueTextSize = mValueTextSize;
         baseDataSet.mVisible = mVisible;
     }

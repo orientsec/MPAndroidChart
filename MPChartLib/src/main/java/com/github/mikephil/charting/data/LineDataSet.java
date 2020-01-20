@@ -95,6 +95,18 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
         return copied;
     }
 
+    @Override
+    public DataSet<Entry> copyDataConfig() {
+        return copyDataConfig(new ArrayList<Entry>());
+    }
+
+    @Override
+    public DataSet<Entry> copyDataConfig(List<Entry> values) {
+        LineDataSet copied = new LineDataSet(values, getLabel());
+        copy(copied);
+        return copied;
+    }
+
     protected void copy(LineDataSet lineDataSet) {
         super.copy(lineDataSet);
         lineDataSet.mCircleColors = mCircleColors;

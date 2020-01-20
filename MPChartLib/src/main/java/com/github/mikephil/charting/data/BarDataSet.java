@@ -62,6 +62,18 @@ public class BarDataSet extends BarLineScatterCandleBubbleDataSet<BarEntry> impl
         return copied;
     }
 
+    @Override
+    public DataSet<BarEntry> copyDataConfig() {
+        return copyDataConfig(new ArrayList<BarEntry>());
+    }
+
+    @Override
+    public DataSet<BarEntry> copyDataConfig(List<BarEntry> values) {
+        BarDataSet copied = new BarDataSet(values, getLabel());
+        copy(copied);
+        return copied;
+    }
+
     protected void copy(BarDataSet barDataSet) {
         super.copy(barDataSet);
         barDataSet.mStackSize = mStackSize;

@@ -56,6 +56,18 @@ public class ScatterDataSet extends LineScatterCandleRadarDataSet<Entry> impleme
         return copied;
     }
 
+    @Override
+    public DataSet<Entry> copyDataConfig() {
+        return copyDataConfig(new ArrayList<Entry>());
+    }
+
+    @Override
+    public DataSet<Entry> copyDataConfig(List<Entry> values) {
+        ScatterDataSet copied = new ScatterDataSet(values, getLabel());
+        copy(copied);
+        return copied;
+    }
+
     protected void copy(ScatterDataSet scatterDataSet) {
         super.copy(scatterDataSet);
         scatterDataSet.mShapeSize = mShapeSize;

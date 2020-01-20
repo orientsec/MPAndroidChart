@@ -46,6 +46,18 @@ public class PieDataSet extends DataSet<PieEntry> implements IPieDataSet {
         return copied;
     }
 
+    @Override
+    public DataSet<PieEntry> copyDataConfig() {
+        return copyDataConfig(new ArrayList<PieEntry>());
+    }
+
+    @Override
+    public DataSet<PieEntry> copyDataConfig(List<PieEntry> values) {
+        PieDataSet copied = new PieDataSet(values, getLabel());
+        copy(copied);
+        return copied;
+    }
+
     protected void copy(PieDataSet pieDataSet) {
         super.copy(pieDataSet);
     }

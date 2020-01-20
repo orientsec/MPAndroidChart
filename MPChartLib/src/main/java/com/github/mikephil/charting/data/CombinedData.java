@@ -238,4 +238,11 @@ public class CombinedData extends BarLineScatterCandleBubbleData<IBarLineScatter
         return success;
     }
 
+    @Override
+    public void clearValues() {
+        for (BarLineScatterCandleBubbleData data : getAllData()){
+            data.clearValues();
+        }
+        super.clearValues();
+    }
 }
